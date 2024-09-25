@@ -1,2 +1,4 @@
-flake.lock
-nix-darwin/result
+.DS_Store
+tmux/plugins/
+raycast
+fzf
