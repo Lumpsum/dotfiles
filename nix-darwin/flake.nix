@@ -26,6 +26,7 @@
         pkgs.zsh-autosuggestions
         pkgs.zsh-syntax-highlighting
         pkgs.google-cloud-sdk
+        pkgs.dive
         ];
 
       # Auto upgrade nix package and the daemon service.
@@ -54,6 +55,7 @@
 
       homebrew.enable = true;
       homebrew.taps = [
+        "derailed/k9s"
         {
             name = "zen-browser/browser";
             clone_target = "https://github.com/zen-browser/desktop.git";
@@ -83,24 +85,28 @@
         "slack"
         "whatsapp"
         "docker"
+        "discord"
+        "spotify"
       ];
     };
   in
   {
     # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#MacBook-of-Rick-Vergunst
-    darwinConfigurations."MacBook-of-Rick-Vergunst" = nix-darwin.lib.darwinSystem {
-      modules = [ 
-        configuration
-        home-manager.darwinModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.rickvergunst = import ./home.nix;
-        }
-      ];
+    # $ darwin-rebuild build --flake .#basic
+    darwinConfigurations = {
+            "basic" = nix-darwin.lib.darwinSystem {
+              modules = [ 
+                configuration
+                home-manager.darwinModules.home-manager {
+                    home-manager.useGlobalPkgs = true;
+                    home-manager.useUserPackages = true;
+                    home-manager.users.rickvergunst = import ./home.nix;
+                }
+              ];
+            };
     };
 
     # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."MacBook-of-Rick-Vergunst".pkgs;
+    darwinPackages = self.darwinConfigurations."basic".pkgs;
   };
 }

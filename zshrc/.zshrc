@@ -26,8 +26,11 @@ export EDITOR=/opt/homebrew/bin/nvim
 # Go
 export GOPATH='/Users/rickvergunst/go'
 
+# K9s
+export XDG_CONFIG_HOME='/Users/rickvergunst/.config'
+
 # Path
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${GOPATH}/bin:/Users/rickvergunst/.cargo/bin
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:${GOPATH}/bin:/Users/rickvergunst/.cargo/bin
 
 # Alias
 alias l="eza -l --icons --git -a"
