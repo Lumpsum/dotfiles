@@ -24,10 +24,13 @@ export STARSHIP_CONFIG=~/.config/starship/starship.toml
 export EDITOR=/opt/homebrew/bin/nvim
 
 # Go
-export GOPATH='/Users/rickvergunst/go'
+export GOPATH=$HOME/go
 
-# K9s
-export XDG_CONFIG_HOME='/Users/rickvergunst/.config'
+# # K9s
+# export XDG_CONFIG_HOME='/Users/rickvergunst/.config'
+
+# Kubectl
+alias k8s='nvim +"lua require(\"kubectl\").open()"'
 
 # Path
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:${GOPATH}/bin:/Users/rickvergunst/.cargo/bin
@@ -51,35 +54,35 @@ export PATH=/run/current-system/sw/bin:$PATH
 eval "$(zoxide init zsh)"
 
 # Transient prompt
-zle-line-init() {
-  emulate -L zsh
-
-  [[ $CONTEXT == start ]] || return 0
-
-  while true; do
-    zle .recursive-edit
-    local -i ret=$?
-    [[ $ret == 0 && $KEYS == $'\4' ]] || break
-    [[ -o ignore_eof ]] || exit 0
-  done
-
-  local saved_prompt=$PROMPT
-  local saved_rprompt=$RPROMPT
-  PROMPT='%# '
-  RPROMPT=''
-  zle .reset-prompt
-  PROMPT=$saved_prompt
-  RPROMPT=$saved_rprompt
-
-  if (( ret )); then
-    zle .send-break
-  else
-    zle .accept-line
-  fi
-  return ret
-}
-
-zle -N zle-line-init
+# zle-line-init() {
+#   emulate -L zsh
+#
+#   [[ $CONTEXT == start ]] || return 0
+#
+#   while true; do
+#     zle .recursive-edit
+#     local -i ret=$?
+#     [[ $ret == 0 && $KEYS == $'\4' ]] || break
+#     [[ -o ignore_eof ]] || exit 0
+#   done
+#
+#   local saved_prompt=$PROMPT
+#   local saved_rprompt=$RPROMPT
+#   PROMPT='%# '
+#   RPROMPT=''
+#   zle .reset-prompt
+#   PROMPT=$saved_prompt
+#   RPROMPT=$saved_rprompt
+#
+#   if (( ret )); then
+#     zle .send-break
+#   else
+#     zle .accept-line
+#   fi
+#   return ret
+# }
+#
+# zle -N zle-line-init
 
 # Yazi
 function y() {
