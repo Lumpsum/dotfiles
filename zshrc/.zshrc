@@ -52,3 +52,32 @@ eval "$(zoxide init zsh)"
 # /Users/rickvergunst/projects/Xccelerated/airbnb/venv/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/rickvergunst/.cargo/bin:/Users/rickvergunst/.nix-profile/bin:/etc/profiles/per-user/rickvergunst/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin:/Users/rickvergunst/.local/bin
 # /opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/rickvergunst/.cargo/bin:/Users/rickvergunst/.nix-profile/bin:/etc/profiles/per-user/rickvergunst/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin:/Users/rickvergunst/.local/bin:/usr/local/go/bin
 
+zle-line-init() {
+  emulate -L zsh
+
+  [[ $CONTEXT == start ]] || return 0
+
+  while true; do
+    zle .recursive-edit
+    local -i ret=$?
+    [[ $ret == 0 && $KEYS == $'\4' ]] || break
+    [[ -o ignore_eof ]] || exit 0
+  done
+
+  local saved_prompt=$PROMPT
+  local saved_rprompt=$RPROMPT
+  PROMPT='%# '
+  RPROMPT=''
+  zle .reset-prompt
+  PROMPT=$saved_prompt
+  RPROMPT=$saved_rprompt
+
+  if (( ret )); then
+    zle .send-break
+  else
+    zle .accept-line
+  fi
+  return ret
+}
+
+zle -N zle-line-init
