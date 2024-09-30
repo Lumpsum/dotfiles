@@ -47,11 +47,10 @@ export PATH=/opt/homebrew/bin:$PATH
 export NIX_CONF_DIR=$HOME/.config/nix
 export PATH=/run/current-system/sw/bin:$PATH
 
+# Zoxide
 eval "$(zoxide init zsh)"
 
-# /Users/rickvergunst/projects/Xccelerated/airbnb/venv/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/rickvergunst/.cargo/bin:/Users/rickvergunst/.nix-profile/bin:/etc/profiles/per-user/rickvergunst/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin:/Users/rickvergunst/.local/bin
-# /opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/rickvergunst/.cargo/bin:/Users/rickvergunst/.nix-profile/bin:/etc/profiles/per-user/rickvergunst/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin:/Users/rickvergunst/.local/bin:/usr/local/go/bin
-
+# Transient prompt
 zle-line-init() {
   emulate -L zsh
 
@@ -81,3 +80,16 @@ zle-line-init() {
 }
 
 zle -N zle-line-init
+
+# Yazi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
