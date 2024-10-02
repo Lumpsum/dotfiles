@@ -28,10 +28,10 @@ export GOPATH=$HOME/go
 
 # # K9s
 # export XDG_CONFIG_HOME='/Users/rickvergunst/.config'
+export K9S_CONFIG_DIR=$HOME/.config/k9s
 
 # Kubectl
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
-
 
 # Path
 export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:${GOPATH}/bin:/Users/rickvergunst/.cargo/bin
