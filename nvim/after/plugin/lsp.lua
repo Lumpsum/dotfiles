@@ -1,50 +1,72 @@
 local lsp_zero = require('lsp-zero')
 
-lsp_zero.on_attach(function(client, bufnr)
-    lsp_zero.default_keymaps({ buffer = bufnr })
-end)
+local lsp_attach = function(client, bufnr)
+    local nmap = function(keys, func, desc)
+        if desc then
+            desc = 'LSP: ' .. desc
+        end
 
-local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+        vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+    end
 
-require("luasnip.loaders.from_vscode").lazy_load()
+    nmap('K', vim.lsp.buf.hover)
+    -- nmap('<C-K>', vim.lsp.buf.signature_help)
+
+    nmap('gd', vim.lsp.buf.definition)
+    nmap('gD', vim.lsp.buf.declaration)
+    nmap('gi', vim.lsp.buf.implementation)
+    nmap('go', vim.lsp.buf.type_definition)
+    nmap('gr', require('telescope.builtin').lsp_references)
+    nmap('gs', vim.lsp.buf.signature_help)
+    nmap('gq', vim.lsp.buf.format)
+
+    nmap('<leader>rn', vim.lsp.buf.rename)
+    nmap('<leader>ca', vim.lsp.buf.code_action)
+    nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols)
+    nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols)
+end
+
+lsp_zero.extend_lspconfig({
+    sign_text = true,
+    lsp_attach = lsp_attach,
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
+})
 
 local cmp = require('cmp')
 cmp.setup({
     sources = {
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
-        { name = "luasnip" },
     },
-
-    mapping = cmp.mapping.preset.insert({
-        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-    }),
 
     snippet = {
         expand = function(args)
-            require('luasnip').lsp_expand(args.body)
+            vim.snippet.expand(args.body)
         end,
     },
 
+    mapping = cmp.mapping.preset.insert({}),
 })
-cmp.setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
     handlers = {
-        lsp_zero.default_setup,
+        function(server_name)
+            require('lspconfig')[server_name].setup({})
+        end,
 
-        require "lspconfig".lua_ls.setup({
-            settings = {
-                Lua = {
-                    hints = { enabled = true },
+        lua_ls = function()
+            require("lspconfig").lua_ls.setup({
+                settings = {
+                    Lua = {
+                        hints = { enabled = true },
+                    }
                 }
-            }
-        }),
+            })
+        end,
 
         pylsp = function()
             require "lspconfig".pylsp.setup({
-                capabilities = lsp_capabilities,
                 settings = {
                     pylsp = {
                         plugins = {
@@ -98,7 +120,7 @@ require('mason-lspconfig').setup({
             })
         end,
 
-        rust_analyzer = function ()
+        rust_analyzer = function()
             require("lspconfig").rust_analyzer.setup({
                 on_attach = function(client, bufnr)
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
