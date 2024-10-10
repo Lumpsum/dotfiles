@@ -7,12 +7,6 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
-vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help)
-
-vim.keymap.set('n', 'gq', vim.lsp.buf.format)
-vim.keymap.set('n', '<C-CR>', vim.lsp.buf.code_action)
-vim.keymap.set('n', 'gl', function() vim.diagnostic.open_float({0, scope="line"}) end)
-
 vim.keymap.set('t', '<C-k>', [[<C-\><C-n>]])
 
 vim.keymap.set('n', '-', "<CMD>Oil<CR>")

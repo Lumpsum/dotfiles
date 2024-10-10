@@ -24,6 +24,12 @@ local lsp_attach = function(client, bufnr)
     nmap('<leader>ca', vim.lsp.buf.code_action)
     nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols)
     nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols)
+
+    if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+        vim.keymap.set('n', '<leader>th', function () vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, { buffer = bufnr })
+    end
+
+    vim.lsp.inlay_hint.enable(false)
 end
 
 lsp_zero.extend_lspconfig({
@@ -102,7 +108,7 @@ require('mason-lspconfig').setup({
         gopls = function()
             require("lspconfig").gopls.setup({
                 on_attach = function(client, bufnr)
-                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                    vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
                 end,
                 settings = {
                     gopls = {
@@ -123,7 +129,7 @@ require('mason-lspconfig').setup({
         rust_analyzer = function()
             require("lspconfig").rust_analyzer.setup({
                 on_attach = function(client, bufnr)
-                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                    vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
                 end,
                 settings = {
                     ["rust-analyzer"] = {
