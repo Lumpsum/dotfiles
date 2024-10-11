@@ -19,7 +19,9 @@
 
         source <(fzf --zsh)
 
-        eval "$(oh-my-posh init zsh)"
+        # eval "$(oh-my-posh init zsh)"
+        export PYENV_ROOT="$HOME/.pyenv"
+        eval "$(pyenv init -)"
 
         function y() {
             local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"

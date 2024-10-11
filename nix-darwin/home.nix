@@ -36,6 +36,8 @@
         watch
         pipx
         starship
+        go
+        presenterm
         # oh-my-posh
     ];
 
