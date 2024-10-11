@@ -34,7 +34,7 @@ export K9S_CONFIG_DIR=$HOME/.config/k9s
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
 
 # Path
-export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:${GOPATH}/bin:/Users/rickvergunst/.cargo/bin
+export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:${GOPATH}/bin:/Users/rickvergunst/.cargo/bin:$PATH
 
 # PyEnv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -53,7 +53,10 @@ export PATH=/opt/homebrew/bin:$PATH
 
 # Nix
 export NIX_CONF_DIR=$HOME/.config/nix
-export PATH=/run/current-system/sw/bin:$PATH
+export PATH=/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+    . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
 
 # Zoxide
 eval "$(zoxide init zsh)"

@@ -7,17 +7,11 @@
         pkgs.vim
         pkgs.eza
         pkgs.yazi
-        pkgs.zoxide
-        pkgs.fd
-        pkgs.zsh-autosuggestions
-        pkgs.zsh-syntax-highlighting
-        pkgs.google-cloud-sdk
-        pkgs.dive
     ];
 
     # Auto upgrade nix package and the daemon service.
     services.nix-daemon.enable = true;
-    services.karabiner-elements.enable = true;
+    # services.karabiner-elements.enable = true;
     # nix.package = pkgs.nix;
 
     # Necessary for using flakes on this system.
@@ -41,28 +35,13 @@
 
     homebrew.enable = true;
     homebrew.taps = [
-        "derailed/k9s"
         {
             name = "zen-browser/browser";
             clone_target = "https://github.com/zen-browser/desktop.git";
         }
         ];
         homebrew.brews = [
-        "neovim"
-        "cue"
-        "fzf"
-        "derailed/k9s/k9s"
         "helm"
-        "httpie"
-        "jesseduffield/lazygit/lazygit"
-        "jq"
-        "kind"
-        "opentofu"
-        "pipx"
-        "ripgrep"
-        "starship"
-        "tmux"
-        "watch"
     ];
     homebrew.casks = [
         "dbeaver-community"

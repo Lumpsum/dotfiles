@@ -1,20 +1,59 @@
 { config, pkgs, ... }:
 
 {
+    imports = [
+        ./k9s.nix
+        ./tmux.nix
+        ./wezterm.nix
+        ./zsh.nix
+    ];
+
     home.username = "rickvergunst";
-    home.stateVersion = "23.05";
+    home.stateVersion = "24.05";
     home.homeDirectory = "/Users/rickvergunst";
 
-    programs.home-manager.enable = true;
-
     home.file = {
-        ".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zshrc/.zshrc";
-        ".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/tmux/.tmux.conf";
         ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
         ".config/nix".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nix";
-        ".config/nix-darwin".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nix-darwin";
-        ".config/k9s".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/k9s";
-        ".config/yazi".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/yazi";
         ".config/starship".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/starship";
     };
+
+    home.packages = with pkgs; [
+        slides
+        zoxide
+        fd
+        google-cloud-sdk
+        dive
+        cue
+        fzf
+        neovim
+        httpie
+        lazygit
+        kind
+        opentofu
+        ripgrep
+        tmux
+        watch
+        pipx
+        starship
+        # oh-my-posh
+    ];
+
+    programs.git = {
+        enable = true;
+        userEmail = "vergunstje@hotmail.com";
+        userName = "Lumpsum";
+    };
+
+    programs.yazi = {
+        enable = true;
+        enableZshIntegration = true;
+    };
+
+    home.sessionVariables = {
+        EDITOR = "nvim";
+        BROWSER = "zen-browser";
+    };
+
+    programs.home-manager.enable = true;
 }
