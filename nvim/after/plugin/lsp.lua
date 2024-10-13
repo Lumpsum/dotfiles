@@ -56,7 +56,7 @@ cmp.setup({
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = { "lua_ls", "pylsp", "gopls", "rust-analyzer", "terraformls", "tflint", "yamlls" },
+    ensure_installed = { "lua_ls", "pylsp", "gopls", "rust_analyzer", "terraformls", "tflint", "yamlls" },
     handlers = {
         function(server_name)
             require('lspconfig')[server_name].setup({})
