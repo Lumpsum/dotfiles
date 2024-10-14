@@ -38,7 +38,7 @@ in
             ];
         extraConfig = ''
         set -g default-terminal "screen-256color"
-        set-option -ga terminal-overrides ",xterm-256color:Tc"
+        set -ga terminal-overrides ",xterm-256color:Tc"
 
         set -g prefix C-a
         unbind C-b
@@ -52,7 +52,7 @@ in
 
         # Refresh tmux conf
         unbind r
-        bind r source-file ~/.tmux.conf
+        bind r source-file ~/.config.tmux/tmux.conf
 
         bind -r j resize-pane -D 5
         bind -r k resize-pane -U 5

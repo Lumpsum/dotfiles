@@ -19,7 +19,6 @@
     };
 
     home.packages = with pkgs; [
-        slides
         zoxide
         fd
         google-cloud-sdk
