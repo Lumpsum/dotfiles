@@ -25,6 +25,8 @@ local lsp_attach = function(client, bufnr)
     nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols)
     nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols)
 
+    vim.keymap.set('n', 'gl', function() vim.diagnostic.open_float(0, { scope = "line" }) end)
+
     if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
         vim.keymap.set('n', '<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
             { buffer = bufnr })
