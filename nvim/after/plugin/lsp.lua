@@ -19,6 +19,7 @@ local lsp_attach = function(client, bufnr)
     nmap('gr', require('telescope.builtin').lsp_references)
     nmap('gs', vim.lsp.buf.signature_help)
     nmap('gq', vim.lsp.buf.format)
+    nmap('gl', vim.diagnostic.open_float)
 
     nmap('<leader>rn', vim.lsp.buf.rename)
     nmap('<leader>ca', vim.lsp.buf.code_action)
