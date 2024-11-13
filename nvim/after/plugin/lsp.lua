@@ -56,9 +56,16 @@ cmp.setup({
     mapping = cmp.mapping.preset.insert({}),
 })
 
+cmp.setup.filetype({"sql"}, {
+    sources = {
+        { name = "vim-dadbod-completion" },
+        { name = "buffer" },
+    }
+})
+
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = { "lua_ls", "pylsp", "gopls", "rust_analyzer", "terraformls", "tflint", "yamlls", "nil_ls" },
+    ensure_installed = { "lua_ls", "pylsp", "gopls", "rust_analyzer", "terraformls", "tflint", "yamlls" },
     handlers = {
         function(server_name)
             require('lspconfig')[server_name].setup({})
