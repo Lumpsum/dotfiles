@@ -1,10 +1,9 @@
 return {
-    {"rebelot/kanagawa.nvim"},
+    { "rebelot/kanagawa.nvim" },
     {
         "wnkz/monoglow.nvim",
         lazy = false,
         priority = 1000,
         opts = {},
-    },
-    {'aliqyan-21/darkvoid.nvim'},
+    }
 }
