@@ -63,6 +63,9 @@ cmp.setup.filetype({"sql"}, {
     }
 })
 
+require("lspconfig").nil_ls.setup({})
+
+
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = { "lua_ls", "pylsp", "gopls", "rust_analyzer", "terraformls", "tflint", "yamlls" },
