@@ -41,22 +41,44 @@ lsp_zero.extend_lspconfig({
 })
 
 local cmp = require('cmp')
+local luasnip = require('luasnip')
 cmp.setup({
     sources = {
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
+        { name = "luasnip" },
     },
 
     snippet = {
         expand = function(args)
-            vim.snippet.expand(args.body)
+            luasnip.lsp_expand(args.body)
         end,
     },
 
-    mapping = cmp.mapping.preset.insert({}),
+    mapping = cmp.mapping.preset.insert({
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_locally_jumpable() then
+                luasnip.expand_or_jump()
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
+    }),
 })
 
-cmp.setup.filetype({"sql"}, {
+
+cmp.setup.filetype({ "sql" }, {
     sources = {
         { name = "vim-dadbod-completion" },
         { name = "buffer" },
@@ -123,10 +145,10 @@ require('mason-lspconfig').setup({
                     vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
 
                     vim.api.nvim_create_autocmd('BufWritePre', {
-                        pattern = "*.go";
-                        callback = function ()
+                        pattern = "*.go",
+                        callback = function()
                             local params = vim.lsp.util.make_range_params()
-                            params.context = {only = {"source.organizeImports"}}
+                            params.context = { only = { "source.organizeImports" } }
 
                             local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
                             for cid, res in pairs(result or {}) do
@@ -137,11 +159,11 @@ require('mason-lspconfig').setup({
                                     end
                                 end
                             end
-                            vim.lsp.buf.format({async = false})
+                            vim.lsp.buf.format({ async = false })
                         end
                     })
                 end,
-                cmd = {"gopls"},
+                cmd = { "gopls" },
                 settings = {
                     gopls = {
                         completeUnimported = true,
