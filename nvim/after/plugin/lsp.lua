@@ -14,10 +14,18 @@ blink.setup({
         default = { "lsp", "path", "snippets", "buffer" },
     },
 
-    signature = { enabled = true },
+    signature = {
+        enabled = true,
+        window = { border = 'single' },
+    },
 
     completion = {
+        menu = {
+            border = 'single',
+        },
+
         documentation = {
+            window = { border = 'single' },
             auto_show = true,
             auto_show_delay_ms = 300
         }
