@@ -11,15 +11,15 @@ blink.setup({
     },
 
     sources = {
-        default = { "lsp", "path", "snippets", "buffer", "dadbod" },
-        providers = {
-            dadbod = { name = "Dadbod", module = "vim-dadbod-completion.blink" },
-        }
+        default = { "lsp", "path", "snippets", "buffer" }
+        -- providers = {
+        --     dadbod = { name = "Dadbod", module = "vim-dadbod-completion.blink" },
+        -- }
     },
 
     signature = {
         enabled = true,
-        window = { border = 'single' },
+        window = { border = 'single' }
     },
 
     completion = {
