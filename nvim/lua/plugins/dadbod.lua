@@ -1,7 +1,7 @@
 return {
     'kristijanhusak/vim-dadbod-ui',
     dependencies = {
-        { dir = "/Users/rickvergunst/plugins/vim-dadbod-snowflake" },
+        { 'tpope/vim-dadbod', lazy=true },
         { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true }, -- Optional
     },
     cmd = {
